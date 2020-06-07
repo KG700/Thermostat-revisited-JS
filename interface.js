@@ -4,26 +4,33 @@ $(document).ready(function() {
 
   $('#temperature-up').on('click', function() {
     thermostat.up();
-    $('#temperature').text(thermostat.temperature);
+    updateTemperature()
   });
 
   $('#temperature-down').on('click', function() {
     thermostat.down();
-    $('#temperature').text(thermostat.temperature);
+    updateTemperature()
   });
 
   $('#temperature-reset').on('click', function() {
     thermostat.resetTemperature();
-    $('#temperature').text(thermostat.temperature);
+    updateTemperature()
   });
 
   $('#powersaving-on').on('click', function() {
     thermostat.switchPowerSavingModeOn();
     $('#power-saving-status').text('on');
+    updateTemperature()
   });
 
   $('#powersaving-off').on('click', function() {
     thermostat.switchPowerSavingModeOff();
     $('#power-saving-status').text('off');
-  })
+    updateTemperature()
+  });
+
+  function updateTemperature() {
+    $('#temperature').text(thermostat.temperature);
+  }
+
 });
