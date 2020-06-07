@@ -79,7 +79,13 @@ describe('Thermostat', function() {
           thermostat.down();
         }
         expect(thermostat.energyUsage()).toEqual('low-usage');
-      })
-    })
+      });
+    });
+
+    describe('when the temperature is between 18 and 25 degrees', function() {
+      it('it is considered medium-usage', function() {
+        expect(thermostat.energyUsage()).toEqual('medium-usage');
+      });
+    });
   })
 });

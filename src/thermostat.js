@@ -60,6 +60,9 @@ class Thermostat {
     if (this.temperature < this.MEDIUM_ENERGY_USAGE_LIMIT) {
       return 'low-usage';
     }
+    if (this.temperature >= this.MEDIUM_ENERGY_USAGE_LIMIT && this.temperature <= this.MAX_LIMIT_PSM_ON) {
+      return 'medium-usage';
+    }
   }
 
 };
