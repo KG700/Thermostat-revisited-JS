@@ -27,5 +27,9 @@ describe('Thermostat', function() {
       thermostat.down();
     }
     expect(thermostat.getCurrentTemperature()).toEqual(10);
+  });
+
+  it('has power saving mode on by default', function() {
+    expect(thermostat.isPowerSavingModeOn()).toBe(true);
   })
 });
