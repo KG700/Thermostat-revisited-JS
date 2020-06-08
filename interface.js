@@ -17,6 +17,17 @@ $(document).ready(function() {
     updateTemperature()
   });
 
+  $('.powersavingmode').on('click', function() {
+    if (this.checked) {
+      thermostat.switchPowerSavingModeOn();
+      $('#power-saving-status').text('on');
+    } else {
+      thermostat.switchPowerSavingModeOff();
+      $('#power-saving-status').text('off');
+    }
+    updateTemperature()
+  })
+
   $('#powersaving-on').on('click', function() {
     thermostat.switchPowerSavingModeOn();
     $('#power-saving-status').text('on');
