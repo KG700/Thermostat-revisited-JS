@@ -10,26 +10,29 @@
     <section>
       <h1 id="temperature"></h1>
       <p>
-        <button id="temperature-up">+</button>
         <button id="temperature-down">-</button>
+        <button id="temperature-up">+</button><br>
         <button id="temperature-reset">reset</button>
         power saving mode is <span id="power-saving-status">on</span>
         <div class="custom-control custom-switch">
           <input type="checkbox" class="custom-control-input powersavingmode" id="customSwitch1" checked>
           <label class="custom-control-label" for="customSwitch1">Power Saving Mode</label>
         </div>
+        <!--
         <button id="powersaving-on">PSM ON</button>
         <button id="powersaving-off">PSM OFF</button>
+      -->
       </p>
     </section>
     <section>
-      <h1>Current temperature: <span id="current-temperature"></span></h1>
+      <h2>Temperature in
       <select id="current-city">
         <option value="london">London</option>
         <option value="newyork">New York</option>
         <option value="paris">Paris</option>
         <option value="tokyo">Tokyo</option>
       </select>
+      : <span id="current-temperature"></span>&#8451;</h2>
     </section>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
