@@ -15,38 +15,33 @@ class Thermostat {
     // return this.temperature;
     $.get('/temperature', function(res) {
       var data = JSON.parse(res)
-      console.log("Am updating thermostat with the temperature:")
-      console.log(data)
       callback(data);
     })
   }
 
   up(currentTemperature, callback) {
-    console.log("I'm in up method")
     if (this.isMaximumTemperature(currentTemperature)) {
       return;
     }
-    console.log("I'm going to post this now to ruby")
-    // this.temperature += 1;
     this.updateTemperature(currentTemperature += 1, callback);
   }
 
   down(currentTemperature, callback) {
-    if (this.isMinimumTemperature()) {
+    if (this.isMinimumTemperature(currentTemperature)) {
       return;
     }
     this.updateTemperature(currentTemperature -= 1, callback);
   }
 
-  isMinimumTemperature() {
-    return this.temperature === this.MINIMUM_TEMPERATURE;
+  isMinimumTemperature(temperature) {
+    return temperature === this.MINIMUM_TEMPERATURE;
   }
 
-  isMaximumTemperature() {
+  isMaximumTemperature(temperature) {
     if (this.isPowerSavingModeOn() === false) {
-      return this.temperature === this.MAX_LIMIT_PSM_OFF;
+      return temperature === this.MAX_LIMIT_PSM_OFF;
     }
-    return this.temperature === this.MAX_LIMIT_PSM_ON;
+    return temperature === this.MAX_LIMIT_PSM_ON;
   }
 
   isPowerSavingModeOn() {
@@ -62,25 +57,20 @@ class Thermostat {
   }
 
   resetTemperature() {
-    // this.temperature = this.DEFAULT_TEMPERATURE;
     this.updateTemperature(this.DEFAULT_TEMPERATURE);
   }
 
-  energyUsage() {
-    if (this.temperature < this.MEDIUM_ENERGY_USAGE_LIMIT) {
+  energyUsage(temperature) {
+    if (temperature < this.MEDIUM_ENERGY_USAGE_LIMIT) {
       return 'low-usage';
     }
-    if (this.temperature >= this.MEDIUM_ENERGY_USAGE_LIMIT && this.temperature <= this.MAX_LIMIT_PSM_ON) {
+    if (temperature >= this.MEDIUM_ENERGY_USAGE_LIMIT && temperature <= this.MAX_LIMIT_PSM_ON) {
       return 'medium-usage';
     }
     return 'high-usage';
   }
 
   updateTemperature(value, callback) {
-    console.log("Am about to post")
-    console.log(value)
-    // console.log("will update ruby's temperature with:")
-    // console.log(value)
     $.post('/temperature', { temperature: value }, callback)
   }
 

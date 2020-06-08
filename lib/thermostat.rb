@@ -10,8 +10,6 @@ class Thermostat
   end
 
   def update(temperature)
-    # p "I'm updating the thermostat instance"
-    # p temperature
     @temperature = temperature
   end
 

@@ -6,7 +6,6 @@ $(document).ready(function() {
 
   $('#temperature-up').on('click', function(data) {
     var currentTemperature = parseInt($('#temperature').text())
-    console.log(currentTemperature);
     thermostat.up(currentTemperature, updateTemperature);
   });
 
@@ -55,12 +54,9 @@ $(document).ready(function() {
   })
 
   function updateTemperature() {
-    console.log("I'm in updateTemperature method")
     thermostat.getCurrentTemperature(function(data) {
-      console.log("I'm now in the interface helper function");
-      console.log(data);
       $('#temperature').text(data.temperature);
-      $('body').attr('class', thermostat.energyUsage());
+      $('body').attr('class', thermostat.energyUsage(data.temperature));
     })
   }
 
