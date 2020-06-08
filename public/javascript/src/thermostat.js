@@ -2,10 +2,10 @@
 
 class Thermostat {
   constructor() {
-    this.DEFAULT_TEMPERATURE = 20;
-    this.temperature = this.DEFAULT_TEMPERATURE;
+    // this.temperature = this.DEFAULT_TEMPERATURE;
     this.powerSavingMode = true
     this.MINIMUM_TEMPERATURE = 10;
+    this.DEFAULT_TEMPERATURE = 20;
     this.MAX_LIMIT_PSM_ON = 25;
     this.MAX_LIMIT_PSM_OFF = 32;
     this.MEDIUM_ENERGY_USAGE_LIMIT = 18;
@@ -15,25 +15,27 @@ class Thermostat {
     // return this.temperature;
     $.get('/temperature', function(res) {
       var data = JSON.parse(res)
-      // console.log("Am updating thermostat with the temperature:")
-      // console.log(data)
+      console.log("Am updating thermostat with the temperature:")
+      console.log(data)
       callback(data);
     })
   }
 
-  up() {
-    if (this.isMaximumTemperature()) {
+  up(currentTemperature, callback) {
+    console.log("I'm in up method")
+    if (this.isMaximumTemperature(currentTemperature)) {
       return;
     }
+    console.log("I'm going to post this now to ruby")
     // this.temperature += 1;
-    this.updateTemperature(this.temperature += 1);
+    this.updateTemperature(currentTemperature += 1, callback);
   }
 
-  down() {
+  down(currentTemperature, callback) {
     if (this.isMinimumTemperature()) {
       return;
     }
-    this.updateTemperature(this.temperature -= 1);
+    this.updateTemperature(currentTemperature -= 1, callback);
   }
 
   isMinimumTemperature() {
@@ -74,10 +76,12 @@ class Thermostat {
     return 'high-usage';
   }
 
-  updateTemperature(value) {
+  updateTemperature(value, callback) {
+    console.log("Am about to post")
+    console.log(value)
     // console.log("will update ruby's temperature with:")
     // console.log(value)
-    $.post('/temperature', { temperature: value })
+    $.post('/temperature', { temperature: value }, callback)
   }
 
 };
