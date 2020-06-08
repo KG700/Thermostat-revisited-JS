@@ -52,8 +52,13 @@ $(document).ready(function() {
   })
 
   function updateTemperature() {
-    $('#temperature').text(thermostat.temperature);
-    $('body').attr('class', thermostat.energyUsage());
+    // console.log("---")
+    thermostat.getCurrentTemperature(function(data) {
+      // console.log("I'm now in the interface helper function");
+      // console.log(data);
+      $('#temperature').text(data.temperature);
+      $('body').attr('class', thermostat.energyUsage());
+    })
   }
 
   function displayWeather(city) {

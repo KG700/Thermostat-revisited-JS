@@ -11,22 +11,29 @@ class Thermostat {
     this.MEDIUM_ENERGY_USAGE_LIMIT = 18;
   }
 
-  getCurrentTemperature() {
-    return this.temperature;
+  getCurrentTemperature(callback) {
+    // return this.temperature;
+    $.get('/temperature', function(res) {
+      var data = JSON.parse(res)
+      // console.log("Am updating thermostat with the temperature:")
+      // console.log(data)
+      callback(data);
+    })
   }
 
   up() {
     if (this.isMaximumTemperature()) {
       return;
     }
-    this.temperature += 1;
+    // this.temperature += 1;
+    this.updateTemperature(this.temperature += 1);
   }
 
   down() {
     if (this.isMinimumTemperature()) {
       return;
     }
-    this.temperature -= 1;
+    this.updateTemperature(this.temperature -= 1);
   }
 
   isMinimumTemperature() {
@@ -53,7 +60,8 @@ class Thermostat {
   }
 
   resetTemperature() {
-    this.temperature = this.DEFAULT_TEMPERATURE;
+    // this.temperature = this.DEFAULT_TEMPERATURE;
+    this.updateTemperature(this.DEFAULT_TEMPERATURE);
   }
 
   energyUsage() {
@@ -64,6 +72,12 @@ class Thermostat {
       return 'medium-usage';
     }
     return 'high-usage';
+  }
+
+  updateTemperature(value) {
+    // console.log("will update ruby's temperature with:")
+    // console.log(value)
+    $.post('/temperature', { temperature: value })
   }
 
 };
