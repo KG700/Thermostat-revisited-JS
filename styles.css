@@ -1,17 +1,26 @@
 html, body {
   height: 100%;
+  background-image: linear-gradient(#658E9C, #F6F7EB);
 }
 
 .low-usage {
-  color: green;
+  background-image: linear-gradient(#226F54, #D7F171);
 }
 
 .medium-usage {
-  color: black;
+  background-image: linear-gradient(#658E9C, #F6F7EB);
 }
 
 .high-usage {
-  color: red;
+  background-image: linear-gradient(#DA2C38, #F4F0BB);
+}
+
+h1 {
+  font-size: 9vw;
+}
+
+h2 {
+  font-size: 1vw;
 }
 
 .thermostat-container {
@@ -22,8 +31,13 @@ html, body {
 }
 
 .thermostat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   height: 450px;
   width: 450px;
   border-radius: 50%;
-  border-style: solid;
+  border-style: solid white;
+  background-color: grey;
 }

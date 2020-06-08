@@ -53,7 +53,7 @@ $(document).ready(function() {
 
   function updateTemperature() {
     $('#temperature').text(thermostat.temperature);
-    $('#temperature').attr('class', thermostat.energyUsage());
+    $('body').attr('class', thermostat.energyUsage());
   }
 
   function displayWeather(city) {
