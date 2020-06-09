@@ -23,7 +23,8 @@ $(document).ready(function() {
 
   $('.powersavingmode').on('click', function() {
     if (this.checked) {
-      thermostat.switchPowerSavingModeOn();
+      var currentTemperature = parseInt($('#temperature').text())
+      thermostat.switchPowerSavingModeOn(currentTemperature, updateTemperature);
     } else {
       thermostat.switchPowerSavingModeOff();
     }

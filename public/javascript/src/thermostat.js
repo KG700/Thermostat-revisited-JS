@@ -27,8 +27,11 @@ class Thermostat {
     $.post('/powersavingmode', { power_saving_mode: false })
   }
 
-  switchPowerSavingModeOn() {
+  switchPowerSavingModeOn(temperature, callback) {
     $.post('/powersavingmode', { power_saving_mode: true })
+    if (temperature > this.MAX_LIMIT_PSM_ON ) {
+      this.updateTemperature(this.MAX_LIMIT_PSM_ON, callback);
+    }
   }
 
   resetTemperature() {
