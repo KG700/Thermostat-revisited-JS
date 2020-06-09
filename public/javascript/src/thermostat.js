@@ -2,8 +2,7 @@
 
 class Thermostat {
   constructor() {
-    // this.temperature = this.DEFAULT_TEMPERATURE;
-    this.powerSavingMode = true
+    // this.powerSavingMode = true
     this.MINIMUM_TEMPERATURE = 10;
     this.DEFAULT_TEMPERATURE = 20;
     this.MAX_LIMIT_PSM_ON = 25;
@@ -12,15 +11,14 @@ class Thermostat {
   }
 
   getCurrentTemperature(callback) {
-    // return this.temperature;
     $.get('/temperature', function(res) {
       var data = JSON.parse(res)
       callback(data);
     })
   }
 
-  up(currentTemperature, callback) {
-    if (this.isMaximumTemperature(currentTemperature)) {
+  up(currentTemperature, powerSavingMode, callback) {
+    if (this.isMaximumTemperature(currentTemperature, powerSavingMode)) {
       return;
     }
     this.updateTemperature(currentTemperature += 1, callback);
@@ -37,24 +35,34 @@ class Thermostat {
     return temperature === this.MINIMUM_TEMPERATURE;
   }
 
-  isMaximumTemperature(temperature) {
-    if (this.isPowerSavingModeOn() === false) {
+  // --------
+
+  isMaximumTemperature(temperature, powerSavingMode) {
+    if (powerSavingMode === false) {
       return temperature === this.MAX_LIMIT_PSM_OFF;
     }
     return temperature === this.MAX_LIMIT_PSM_ON;
-  }
+  };
 
-  isPowerSavingModeOn() {
-    return this.powerSavingMode === true;
+  getPowerSavingMode(callback) {
+    $.get('/powersavingmode', function(res) {
+      var data = JSON.parse(res);
+      callback(data);
+    })
+    // return this.powerSavingMode === true;
   }
 
   switchPowerSavingModeOff() {
-    this.powerSavingMode = false;
+    $.post('/powersavingmode', { power_saving_mode: false })
+    // this.powerSavingMode = false;
   }
 
   switchPowerSavingModeOn() {
-    this.powerSavingMode = true;
+    $.post('/powersavingmode', { power_saving_mode: true })
+    // this.powerSavingMode = true;
   }
+
+// -------
 
   resetTemperature() {
     this.updateTemperature(this.DEFAULT_TEMPERATURE);

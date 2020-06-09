@@ -1,12 +1,14 @@
 $(document).ready(function() {
   var thermostat = new Thermostat();
 
-  // $('#temperature').text(thermostat.temperature);
+  updatePowerSavingMode()
   updateTemperature()
 
   $('#temperature-up').on('click', function(data) {
     var currentTemperature = parseInt($('#temperature').text())
-    thermostat.up(currentTemperature, updateTemperature);
+    var powerSavingMode = $('.powersavingmode').is(':checked')
+    // console.log(powerSavingMode);
+    thermostat.up(currentTemperature, powerSavingMode, updateTemperature);
   });
 
   $('#temperature-down').on('click', function() {
@@ -19,28 +21,20 @@ $(document).ready(function() {
     updateTemperature()
   });
 
+// -------
+
   $('.powersavingmode').on('click', function() {
     if (this.checked) {
       thermostat.switchPowerSavingModeOn();
-      $('#power-saving-status').text('on');
+      // $('#power-saving-status').text('on');
     } else {
       thermostat.switchPowerSavingModeOff();
-      $('#power-saving-status').text('off');
+      // $('#power-saving-status').text('off');
     }
     updateTemperature()
   })
 
-  $('#powersaving-on').on('click', function() {
-    thermostat.switchPowerSavingModeOn();
-    $('#power-saving-status').text('on');
-    updateTemperature()
-  });
-
-  $('#powersaving-off').on('click', function() {
-    thermostat.switchPowerSavingModeOff();
-    $('#power-saving-status').text('off');
-    updateTemperature()
-  });
+// -------
 
   $.get('http://api.openweathermap.org/data/2.5/weather?q=London&appid=a3d9eb01d4de82b9b8d0849ef604dbed&units=metric', function(data) {
     $('#current-temperature').text(data.main.temp);
@@ -57,6 +51,12 @@ $(document).ready(function() {
     thermostat.getCurrentTemperature(function(data) {
       $('#temperature').text(data.temperature);
       $('body').attr('class', thermostat.energyUsage(data.temperature));
+    })
+  }
+
+  function updatePowerSavingMode() {
+    thermostat.getPowerSavingMode(function(data) {
+      $('.powersavingmode').prop('checked', data.power_saving_mode)
     })
   }
 
