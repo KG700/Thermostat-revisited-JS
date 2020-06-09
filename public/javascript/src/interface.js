@@ -3,11 +3,11 @@ $(document).ready(function() {
 
   updatePowerSavingMode()
   updateTemperature()
+  updateWeatherCity();
 
   $('#temperature-up').on('click', function(data) {
     var currentTemperature = parseInt($('#temperature').text())
     var powerSavingMode = $('.powersavingmode').is(':checked')
-    // console.log(powerSavingMode);
     thermostat.up(currentTemperature, powerSavingMode, updateTemperature);
   });
 
@@ -21,30 +21,19 @@ $(document).ready(function() {
     updateTemperature()
   });
 
-// -------
-
   $('.powersavingmode').on('click', function() {
     if (this.checked) {
       thermostat.switchPowerSavingModeOn();
-      // $('#power-saving-status').text('on');
     } else {
       thermostat.switchPowerSavingModeOff();
-      // $('#power-saving-status').text('off');
     }
     updateTemperature()
   })
 
-// -------
-
-  $.get('http://api.openweathermap.org/data/2.5/weather?q=London&appid=a3d9eb01d4de82b9b8d0849ef604dbed&units=metric', function(data) {
-    $('#current-temperature').text(data.main.temp);
-  });
-
-  displayWeather('London');
-
   $('#current-city').change(function(event) {
     var city = $('#current-city').val();
-    displayWeather(city);
+    thermostat.updateWeatherCity(city, displayWeather)
+    // displayWeather(city);
   })
 
   function updateTemperature() {
@@ -57,6 +46,13 @@ $(document).ready(function() {
   function updatePowerSavingMode() {
     thermostat.getPowerSavingMode(function(data) {
       $('.powersavingmode').prop('checked', data.power_saving_mode)
+    })
+  }
+
+  function updateWeatherCity() {
+    thermostat.getWeatherCity(function(data) {
+      $('#current-city option[value=' + data.city + ']').prop('selected', true);
+      displayWeather(data.city);
     })
   }
 

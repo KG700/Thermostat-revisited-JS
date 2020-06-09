@@ -70,8 +70,19 @@ class Thermostat {
     })
   }
 
+  getWeatherCity(callback) {
+    $.get('/city', function(res) {
+      var data = JSON.parse(res);
+      callback(data);
+    })
+  }
+
   updateTemperature(value, callback) {
     $.post('/temperature', { temperature: value }, callback)
+  }
+
+  updateWeatherCity(city, callback) {
+    $.post('/city', { city: city }, callback(city))
   }
 
 };

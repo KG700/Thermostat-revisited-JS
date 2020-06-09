@@ -1,5 +1,5 @@
 class Thermostat
-  attr_reader :temperature, :power_saving_mode
+  attr_reader :temperature, :power_saving_mode, :city
 
   def initialize
     @temperature = 20
