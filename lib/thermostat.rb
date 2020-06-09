@@ -4,6 +4,7 @@ class Thermostat
   def initialize
     @temperature = 20
     @power_saving_mode = true
+    @city = "london"
   end
 
   def self.instance
@@ -16,6 +17,10 @@ class Thermostat
 
   def update_power_saving_mode(power_saving_mode)
     @power_saving_mode = power_saving_mode
+  end
+
+  def update_city(city)
+    @city = city
   end
 
 end

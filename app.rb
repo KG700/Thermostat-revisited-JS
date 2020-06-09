@@ -30,5 +30,16 @@ class ThermostatApp < Sinatra::Base
     { status: 200 }.to_json
   end
 
+  get "/city" do
+    thermostat = Thermostat.instance
+    { city: thermostat.city }.to_json
+  end
+
+  post "/city" do
+    thermostat = Thermostat.instance
+    thermostat.update_city(params[:city])
+    { status: 200 }.to_json
+  end
+
   run! if app_file == $0
 end
